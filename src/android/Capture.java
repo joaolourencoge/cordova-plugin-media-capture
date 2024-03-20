@@ -309,7 +309,7 @@ public class Capture extends CordovaPlugin {
      * Sets up an intent to capture video.  Result handled by onActivityResult()
      */
     private void captureVideo(Request req) {
-        if (isMissingCameraPermissions(req, Manifest.permission.READ_MEDIA_VIDEO)) return;
+        if (isMissingCameraPermissions(req, Manifest.permission.READ_MEDIA_VIDEO) && android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) return;
 
         Intent intent = new Intent(android.provider.MediaStore.ACTION_VIDEO_CAPTURE);
 
@@ -604,7 +604,7 @@ public class Capture extends CordovaPlugin {
                 }
             }
 
-            if (success) {
+            if (success && android.os.Build.VERSION.SDK_INT <= Build.VERSION_CODES.TIRAMISU) {
                 executeRequest(req);
             } else {
                 pendingRequests.resolveWithFailure(req, createErrorObject(CAPTURE_PERMISSION_DENIED, "Permission denied."));
