@@ -604,7 +604,9 @@ public class Capture extends CordovaPlugin {
                 }
             }
 
-            if (success && android.os.Build.VERSION.SDK_INT <= Build.VERSION_CODES.TIRAMISU) {
+            if(android.os.Build.VERSION.SDK_INT <= Build.VERSION_CODES.TIRAMISU) {
+                // Dont do anything 
+            } else if (success) {
                 executeRequest(req);
             } else {
                 pendingRequests.resolveWithFailure(req, createErrorObject(CAPTURE_PERMISSION_DENIED, "Permission denied."));
