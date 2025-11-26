@@ -287,7 +287,8 @@ public class Capture extends CordovaPlugin {
      * Sets up an intent to capture images.  Result handled by onActivityResult()
      */
     private void captureImage(Request req) {
-        if (isMissingCameraPermissions(req, Manifest.permission.READ_MEDIA_IMAGES)) return;
+        // Check for camera permission only - no READ_MEDIA_IMAGES needed for capturing new photos
+        if (isMissingCameraPermissions(req, null)) return;
 
         // Save the number of images currently on disk for later
         this.numPics = queryImgDB(whichContentStore()).getCount();
@@ -309,7 +310,8 @@ public class Capture extends CordovaPlugin {
      * Sets up an intent to capture video.  Result handled by onActivityResult()
      */
     private void captureVideo(Request req) {
-        if (isMissingCameraPermissions(req, Manifest.permission.READ_MEDIA_VIDEO) && android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) return;
+        // Check for camera permission only - no READ_MEDIA_VIDEO needed for capturing new videos
+        if (isMissingCameraPermissions(req, null)) return;
 
         Intent intent = new Intent(android.provider.MediaStore.ACTION_VIDEO_CAPTURE);
 
